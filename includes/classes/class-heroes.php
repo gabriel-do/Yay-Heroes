@@ -6,22 +6,36 @@ class Heroes
      */
     public function get_hero($post)
     {
-        $hero_props = (array) null;
         $hero_class = get_post_meta($post->ID, "class", true);
-        array_push($hero_props, $post->post_title, $hero_class);
-        return $hero_props;
+        $hero_model = [
+
+            'id'   =>  $post->ID,
+            "name" => $post->post_title,
+            "class" => $hero_class,
+
+        ];
+        return $hero_model;
     }
 
-    public function get_all_heroes()
+    public function get_all_heroes($force_get_all = true, $params = null)
     {
         $heroes = (array) null;
         $args = array(
-            'post_type' => 'yay_hero',
-            'numberposts' => -1
+            'post_type'   => 'yay_hero',
+            'post_status' => 'publish',
+            'posts_per_page' => !$force_get_all ? $params['posts_per_page'] : -1,
         );
-        $posts = get_posts($args);
-        foreach ($posts as $post) {
-            array_push($heroes, $this->get_hero($post));
+
+        if (!empty($params['posts_per_page'])) {;
+        }
+
+        if (!empty($params['paged'])) {
+            $args['paged'] = $params['paged'];
+        }
+
+        $hero_posts = get_posts($args);
+        foreach ($hero_posts as $hero_post) {
+            array_push($heroes, $this->get_hero($hero_post));
         }
         return $heroes;
     }
