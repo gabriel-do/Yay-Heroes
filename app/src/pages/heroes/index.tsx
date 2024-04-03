@@ -15,7 +15,7 @@ const Heroes = () => {
         queryFn: () => window.yayHeroes.allHeroes
     });
 
-    console.log(heroesFromWindow);
+    console.log(heroesFromWindow?.data);
 
 
     if (heroesFromApi?.isLoading) return 'Loading...';

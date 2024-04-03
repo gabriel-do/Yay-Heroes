@@ -28,32 +28,8 @@ class YayHeroesREST
 
     public function get_heroes($request)
     {
-        $posts_per_page = (int)$request['posts_per_page'];
-        $paged = (int)$request['paged'];
-
-        $args =  array(
-            'post_type'     => 'yay_hero',
-            'post_status'   => 'publish',
-            'posts_per_page' => $posts_per_page,
-            'paged'         => $paged
-        );
-        $heroes = new WP_Query($args);
-        $heroes_total = $heroes->found_posts;
-        $heroes_payload = (array) null;
-        if ($heroes->have_posts()) :
-            while ($heroes->have_posts()) :
-                $heroes->the_post();
-                $hero_id = get_the_ID();
-                $data = array(
-                    'id'            => $hero_id,
-                    'name'          => get_the_title(),
-                    'class'         => get_post_meta($hero_id, 'class', true),
-                );
-                array_push($heroes_payload, $data);
-            endwhile;
-            wp_reset_postdata();
-        endif;
-
-        return new WP_REST_Response(array('heroes' => $heroes_payload, 'total' => $heroes_total));
+        $heroes = new Heroes();
+        $heroes_total = count($heroes->get_all_heroes());
+        return new WP_REST_Response(array('heroes' => $heroes->get_all_heroes(true, $request), 'total' => $heroes_total));
     }
 }
