@@ -1,0 +1,1 @@
+export const NONCE = window.yayHeroes.api_nonce;

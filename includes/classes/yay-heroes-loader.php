@@ -1,15 +1,17 @@
 <?php
+require_once(dirname(__FILE__) . '/class-heroes.php');
 class YayHeroesLoader
 {
-
     protected static $instance = null;
 
-    function __construct()
+    private function __construct()
     {
         add_action('admin_menu', array($this, 'add_admin_menu'));
         add_action('wp_print_scripts', array($this, 'render_refresh_runtime'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_heroes_app'));
         add_filter('script_loader_tag', array($this, 'load_script_module'), 10, 2);
+        add_action('wp_enqueue_scripts', array($this, 'localize_heroes_script'));
+        add_action('admin_enqueue_scripts', array($this, 'localize_heroes_script'));
     }
 
     public static function instance()
@@ -65,5 +67,15 @@ class YayHeroesLoader
             }
         }
         return $tag;
+    }
+
+    public function localize_heroes_script()
+    {
+        $heroes = new Heroes();
+        wp_localize_script('yay_heroes/module/admin_page', 'yayHeroes', [
+            'allHeroes' => $heroes->get_all_heroes(),
+            'api_url' => get_rest_url(),
+            'api_nonce' => wp_create_nonce('wp_rest')
+        ]);
     }
 }
