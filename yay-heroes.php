@@ -26,9 +26,9 @@ require_once(dirname(__FILE__) . '/includes/classes/class-heroes-rest-api.php');
 
 function yay_heroes_init()
 {
-    YayHeroesLoader::instance();
-    YayHeroPostTypeRegister::instance();
-    YayHeroesREST::instance();
+  YayHeroesLoader::instance();
+  YayHeroPostTypeRegister::instance();
+  YayHeroesREST::instance();
 }
 
 add_action('plugins_loaded', 'yay_heroes_init');
