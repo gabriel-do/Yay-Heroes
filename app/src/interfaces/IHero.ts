@@ -1,18 +1,24 @@
 export interface Hero {
-    name: string,
-    class: Class
+  name: string,
+  class: Class
 }
 
-enum Class {
-    WARRIOR = 'warrior',
-    MASKMAN = 'maskman',
-    MAGE = 'mage'
+export enum Class {
+  WARRIOR = 'warrior',
+  MASKMAN = 'maskman',
+  MAGE = 'mage'
 }
 
 export interface HeroModel extends Hero {
-    id: number
+  id: number
 }
 
-export interface HeroPayload {
-    heroes: HeroModel[]
+export interface HeroResponse {
+  heroes?: HeroModel[],
+  errors?: unknown
+}
+
+export interface UpdateHero {
+  name?: string,
+  class?: Class;
 }

@@ -6,11 +6,9 @@ const queryClient = new QueryClient()
 
 const App: React.FC = () => {
   return (
-    <div>
-      <QueryClientProvider client={queryClient}>
-        < AppLayout />
-      </QueryClientProvider>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      < AppLayout />
+    </QueryClientProvider>
   )
 };
 

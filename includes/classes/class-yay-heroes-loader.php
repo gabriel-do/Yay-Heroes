@@ -1,8 +1,9 @@
 <?php
 require_once(dirname(__FILE__) . '/class-heroes.php');
+require_once(YAY_HEROES_PLUGIN_PATH . "/includes/Utils/SingletonTrait.php");
 class YayHeroesLoader
 {
-  protected static $instance = null;
+  use SingletonTrait;
 
   private function __construct()
   {
@@ -12,14 +13,6 @@ class YayHeroesLoader
     add_filter('script_loader_tag', array($this, 'load_script_module'), 10, 2);
     add_action('wp_enqueue_scripts', array($this, 'localize_heroes_script'));
     add_action('admin_enqueue_scripts', array($this, 'localize_heroes_script'));
-  }
-
-  public static function instance()
-  {
-    if (is_null(self::$instance)) {
-      self::$instance = new self();
-    }
-    return self::$instance;
   }
 
 
@@ -72,10 +65,14 @@ class YayHeroesLoader
   public function localize_heroes_script()
   {
     $heroes = new Heroes();
+    $can_write = current_user_can('manage_options');
+    $can_read = current_user_can('edit_posts');
     wp_localize_script('yay_heroes/module/admin_page', 'yayHeroes', [
       'allHeroes' => $heroes->get_all_heroes(),
       'api_url' => get_rest_url(),
-      'api_nonce' => wp_create_nonce('wp_rest')
+      'api_nonce' => wp_create_nonce('wp_rest'),
+      'canRead' => $can_read,
+      'canWrite' => $can_write,
     ]);
   }
 }

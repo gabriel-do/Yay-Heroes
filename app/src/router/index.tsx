@@ -5,27 +5,26 @@ import NewHero from '../pages/new-hero';
 import App from '../App';
 
 export const router = createHashRouter([
-    {
-        path: "/",
-        element: <Navigate to="/heroes" />
-    },
-    {
-        path: "/heroes",
-        element: <App />,
-        children: [
-            {
-                path: "",
-                element: <Heroes />
-            },
-            {
-
-                path: "new-hero",
-                element: <NewHero />
-            },
-            {
-                path: "hero/:id",
-                element: <HeroDetails />
-            }
-        ]
-    }
+  {
+    path: "/",
+    element: <Navigate to="/heroes" />
+  },
+  {
+    path: "/heroes",
+    element: <App />,
+    children: [
+      {
+        path: "",
+        element: <Heroes />
+      },
+      {
+        path: "new-hero",
+        element: <NewHero />
+      },
+      {
+        path: "hero/:id",
+        element: <HeroDetails />
+      }
+    ]
+  }
 ]);
