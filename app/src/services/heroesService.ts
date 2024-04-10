@@ -5,12 +5,12 @@ import {
   UPDATE_HERO,
   DELETE_HERO,
 } from "../constants/apiEndpoints";
-import { HeroResponse, Hero, UpdateHero } from "../interfaces/IHero";
+import { HeroResponse, Hero, UpdateHero, GetHeroesParams } from "../interfaces/IHero";
 import kyInstance from "./interceptor";
 
-export async function getHeroes(): Promise<HeroResponse> {
+export async function getHeroes(params: GetHeroesParams): Promise<HeroResponse> {
   const queryString: string = GET_ALL_HEROES;
-  const res = await kyInstance.get(queryString);
+  const res = await kyInstance.get(queryString + `?posts_per_page=${params.postsPerPage}&paged=${params.paged}}`);
   return res.json();
 }
 

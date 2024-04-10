@@ -15,10 +15,16 @@ export interface HeroModel extends Hero {
 
 export interface HeroResponse {
   heroes?: HeroModel[],
+  total?: number,
   errors?: unknown
 }
 
 export interface UpdateHero {
   name?: string,
   class?: Class;
+}
+
+export interface GetHeroesParams {
+  postsPerPage: string,
+  paged: string
 }

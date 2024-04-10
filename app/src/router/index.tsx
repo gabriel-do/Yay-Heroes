@@ -15,15 +15,17 @@ export const router = createHashRouter([
     children: [
       {
         path: "",
-        element: <Heroes />
-      },
-      {
-        path: "new-hero",
-        element: <NewHero />
-      },
-      {
-        path: "hero/:id",
-        element: <HeroDetails />
+        element: <Heroes />,
+        children: [
+          {
+            path: "new-hero",
+            element: <NewHero />
+          },
+          {
+            path: "hero/:id",
+            element: <HeroDetails />
+          }
+        ]
       }
     ]
   }

@@ -18,17 +18,14 @@ class Heroes
     return $hero_model;
   }
 
-  public function get_all_heroes($force_get_all = true, $params = null)
+  public function get_all_heroes($params = null)
   {
     $heroes = (array) null;
     $args = array(
       'post_type'   => 'yay_hero',
       'post_status' => 'publish',
-      'posts_per_page' => !$force_get_all ? $params['posts_per_page'] : -1,
+      'posts_per_page' => empty($params) ? -1 : $params['posts_per_page']
     );
-
-    if (!empty($params['posts_per_page'])) {;
-    }
 
     if (!empty($params['paged'])) {
       $args['paged'] = $params['paged'];
