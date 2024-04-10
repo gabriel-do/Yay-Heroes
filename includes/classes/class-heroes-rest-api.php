@@ -13,7 +13,7 @@ class YayHeroesREST
     register_rest_route('yay', '/heroes', [
       'method' => 'GET',
       'callback' => [$this, 'get_heroes'],
-      'permission_callback'   => [$this, 'can_read'],
+      // 'permission_callback'   => [$this, 'can_read'],
     ]);
 
     register_rest_route('yay', '/hero', [
@@ -45,7 +45,7 @@ class YayHeroesREST
   {
     $heroes = new Heroes();
     $heroes_total = count($heroes->get_all_heroes());
-    return new WP_REST_Response(['heroes' => $heroes->get_all_heroes(true, $req), 'total' => $heroes_total]);
+    return new WP_REST_Response(['heroes' => $heroes->get_all_heroes($req), 'total' => $heroes_total]);
   }
 
   public function get_one_hero(WP_REST_Request $req)
